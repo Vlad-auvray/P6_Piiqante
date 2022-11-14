@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
-
+const app = express();
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
+require('dotenv').config();
+
 
 mongoose.connect(process.env.MONGO_DB_URL,
   { useNewUrlParser: true,
@@ -12,7 +13,9 @@ mongoose.connect(process.env.MONGO_DB_URL,
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-const app = express();
+
+
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -15,8 +15,8 @@ Un système de like/dislike permet de noter les sauces par les utilisateurs. La 
 
 SECURITE: 
 
-Le pluggin Mongoose-unique -validateur s'asssure qu'un seul ID à partir d'une même adresse peut-être créé
+Le pluggin Mongoose-unique-validateur s'asssure qu'un seul ID à partir d'une même adresse peut-être créé
 Le package password-validator nous permet de créer un middleware pour définir les règles de création d'un mot de passe.
 
-Le package crypto-js nous permet d'ajouter une couche de sécurité supplémentaire autour d'un utilisateur. Le condensat (hash) de l'email de l'utilisateur est créé avec une focntion de hachage SHA512 (64 bits).
+
 Le package bcrypt nous permet de créer un hash du mot de passe, et attribuer un TOKEN de connexion à l'utilisateur. 
