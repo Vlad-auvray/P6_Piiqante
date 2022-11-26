@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
     res.end("Vérifiez le format de l'email, exemple: votremail@exemple.com.");
   } else {
     bcrypt
-      .hash(req.body.password, 8)
+      .hash(req.body.password, 10)
       .then(hash => {
         const user = new User({
           email: req.body.email,
@@ -36,7 +36,7 @@ exports.signup = (req, res, next) => {
           return res.status(401).json({ error: 'Merci de vérifier votre identifiant et/ou mot de passe.' });
         }
         bcrypt.compare(req.body.password, user.password)
-          .then(valid => {
+          .then((valid) => {
             if (!valid) {
               return res.status(401).json({ error: 'Merci de vérifier votre identifiant et/ou mot de passe.' });
             }
@@ -44,7 +44,7 @@ exports.signup = (req, res, next) => {
               userId: user._id,
               token: jwt.sign(
                 { userId: user._id },
-                process.env.jwt,
+                process.env.SECRET_KEY,
                 { expiresIn: '24h', }
               ),
             });

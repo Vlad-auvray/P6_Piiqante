@@ -5,6 +5,6 @@ const isPasswordValid = require("../middleware/password")
 const isEmailValid = require("../middleware/email")
 
 router.post('/signup',isEmailValid, isPasswordValid, userCtrl.signup);
-router.post('/login', userCtrl.login);
+router.post('/login',isEmailValid, isPasswordValid, userCtrl.login);
 
 module.exports = router;
