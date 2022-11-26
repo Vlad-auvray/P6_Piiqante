@@ -4,17 +4,30 @@ require('dotenv').config();
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1];
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+      return res.status(401).json({ "message": "Token introvable" });
+    }
+
+    const authorizationData = req.headers.authorization.split(" ");
+    if (!authorizationData) {
+      return res.status(401).json({ "message": "Token introvable" });
+    }
+
+    const token = authorizationData[1];
+
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    const userId = decodedToken.userId;
-    if (req.body.userId && req.body.userId !== userId) {
-      throw 'Identifiant incorrect';
+
+    req.auth = {
+      userId: decodedToken.userId
+    };
+
+    if (!decodedToken.userId) {
+      return res.status(401).json({ "message": "Token invalide" });
     } else {
       next();
     }
   } catch {
-    res.status(401).json({
-      error: new Error('Requête non-valide.')
-    });
+    return res.status(401).json({ "message": "Une erreur est survenue lors de la vérification du token" });
   }
 };

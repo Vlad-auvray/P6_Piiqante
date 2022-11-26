@@ -28,26 +28,18 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.updateSauce = (req, res ,next) => {
-  Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-    const filename = sauce.imageUrl.split("/images/")[1];
-    fs.unlink(`images/${filename}`, () => {
-      const sauceObject = req.file
-        ? {
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${
-              req.file.filename
-            }`,
-          }
-        : { ...req.body };
-      Sauce.updateOne(
-        { _id: req.params.id },
-        { ...sauceObject, _id: req.params.id }
-      )
-        .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
-        .catch((error) => res.status(400).json({ error }));
-    });
-  });
+  //Si on trouve un nouveau fichier image , on recupere la chaine de caractère et on la parse en objet et on modifie l'url de l'image
+  const sauceObject = req.file ?
+      {
+          ...JSON.parse(req.body.sauce),
+          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+          //Sinon on prend le corps de la requete et on modifie l'identifiant de l'objet qu'on vient de créer pour correspondre à l'identifiant des parametres de requete
+      } : {...req.body}
+  Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})
+      .then(() => res.status(200).json({ message: 'Sauce Modifiée !' }))
+      .catch(error => res.status(400).json({ error }))
 };
+
 
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})

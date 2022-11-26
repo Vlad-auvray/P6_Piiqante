@@ -1,39 +1,38 @@
+const e = require("express");
+
 module.exports = (req, res, next) => {
-    // Si la route post est empruntée
-    if (JSON.parse(req.body.sauce !== undefined)) {
-      const sauce = JSON.parse(req.body.sauce);
-      let { name, manufacturer, description, mainPepper } = sauce;
-      let toSizedTab = [];
-  
-      function toSeize(...string) {
-        toSizedTab = string.map((elt) => elt.toSeize());
-      }
-      toSeize(name, manufacturer, description, mainPepper);
-  
-      // Vérification du nombre de caractères
-      const hasThreeCharacters = (currentValue) => currentValue.length >= 3;
-      if (toSizedTab.every(hasThreeCharacters)) {
-        next();
-      } else {
-        throw new Error("3 caractères min.");
-      }
-    } else {
-      // Si la route put est emrpuntée
-      const sauce = req.body;
-      let { name, manufacturer, description, mainPepper } = sauce;
-      let toSizedTab = [];
-  
-      function toSeize(...string) {
-        toSizedTab = string.map((elt) => elt.toSeize());
-      }
-      toSeize(name, manufacturer, description, mainPepper);
-  
-      // Vérification du nombre de caractères
-      const hasThreeCharacters = (currentValue) => currentValue.length >= 3;
-      if (toSizedTab.every(hasThreeCharacters)) {
-        next();
-      } else {
-        throw new Error("3 caractères min.");
-      }
+
+  if (req.body.sauce) {
+    const sauce = JSON.parse(req.body.sauce);
+    console.log(sauce.name.lenght < 3);
+
+    if (!sauce.name || sauce.name.length < 3) {
+      return res.status(401).json({ "message": "Le nom de la sauce est introuvable ou contient moins de trois caractères" });
     }
-  };
+
+    if (!sauce.description || sauce.description.length < 3) {
+      return res.status(401).json({ "message": "La description de la sauce est introuvable ou contient moins de trois caractères" });
+    }
+
+    if (!sauce.mainPepper || sauce.mainPepper.lenght < 3) {
+      return res.status(401).json({ "message": "L'ingrédiant principal de la sauce est introuvable ou contient moins de trois caractères" });
+    }
+
+    if (!sauce.heat || sauce.heat.length < 3) {
+      return res.status(401).json({ "message": "La force du piment de la sauce est introuvable ou contient moins de trois caractères" });
+    }
+
+    if (!sauce.manufacturer || sauce.manufacturer.length < 3) {
+      return res.status(401).json({ "message": "Le nom du fabriquant de la sauce est introuvable ou contient moins de trois caractères" });
+    }
+
+    if (req.auth.userId !== sauce.userId) {
+      return res.status(401).json({ "message": "L'utilisateur qui essai d'effectué cette opération est différent de l'utilisateur connecté." });
+    }
+
+    next();
+
+  } else {
+    return res.status(401).json({ "message": "Une ou plusieurs informations de la sauce sont introuvables." });
+  }
+};

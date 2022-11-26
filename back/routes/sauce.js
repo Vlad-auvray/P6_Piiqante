@@ -8,7 +8,7 @@ const sauceElmt = require ('../middleware/sauce.js');
 router.get("/", auth, sauceCtrl.getAllSauces);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 router.post("/", auth, multer, sauceElmt, sauceCtrl.createSauce);
-router.put("/:id", auth, multer, sauceElmt, sauceCtrl.updateSauce);
+router.put("/:id", auth, multer, sauceCtrl.updateSauce);
 router.delete("/:id", auth, sauceCtrl.deleteSauce);
 router.post("/:id/like", auth, sauceCtrl.likeDislikeSauce);
 
