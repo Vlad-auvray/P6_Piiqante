@@ -28,12 +28,12 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.updateSauce = (req, res ,next) => {
-  //Si on trouve un nouveau fichier image , on recupere la chaine de caractère et on la parse en objet et on modifie l'url de l'image
+  //Si on trouve une nouvelle image, on recupere la chaine de caractères, on lest fait un objet puis on modifie l'url de l'image
   const sauceObject = req.file ?
       {
           ...JSON.parse(req.body.sauce),
           imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-          //Sinon on prend le corps de la requete et on modifie l'identifiant de l'objet qu'on vient de créer pour correspondre à l'identifiant des parametres de requete
+          //Sinon on prend le corps de la requete et on modifie l'id de l'objet pour qu'il corresponde à l'identifiant des paramètres de requete
       } : {...req.body}
   Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})
       .then(() => res.status(200).json({ message: 'Sauce Modifiée !' }))
