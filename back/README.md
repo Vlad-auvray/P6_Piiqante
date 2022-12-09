@@ -4,9 +4,10 @@ UTILISATION DU PROJET :
 
 1- Cloner le repo du projet
 2- Créer un fichier nommé .env dans le dossier back
-3- Ajouter les variables
-4- Installer les dépendances npm install 
-5- Démarrer les serveur nodemon server
+4- Ajouter un dossier nommé images dans le dossier back
+5- Ajouter les variables
+6- Installer les dépendances npm install 
+7- Démarrer les serveur nodemon server
 
 Ici l'API du projet, ses modèles (user / sauce), ses controlleurs et ses routes sont configurés. 
 
