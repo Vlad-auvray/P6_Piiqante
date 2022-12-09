@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-
+// Fonction de vérification de la présence d'un utilisaeur enregistré (comparaison entre l'userID et l'iD associé au Token)
 module.exports = (req, res, next) => {
   try {
     const authorization = req.headers.authorization;

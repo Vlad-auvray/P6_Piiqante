@@ -1,5 +1,6 @@
 const express = require("express");
 
+//Fonction de validation des entrées lors de la création d'une sauce
 module.exports = (req, res, next) => {
 
   if (req.body.sauce) {
@@ -23,7 +24,7 @@ module.exports = (req, res, next) => {
     }
 
     if (req.auth.userId !== sauce.userId) {
-      return res.status(401).json({ "message": "L'utilisateur qui essai d'effectué cette opération est différent de l'utilisateur connecté." });
+      return res.status(401).json({ "message": "L'utilisateur qui essaie d'effectuer cette opération est différent de l'utilisateur connecté." });
     }
 
     next();

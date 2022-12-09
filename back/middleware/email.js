@@ -1,3 +1,4 @@
+// Fonction de validation de l'entrée d'un email (pour création d'un user, validation du format)
 module.exports = (req, res, next) => {
     const validEmail = (email) => {
         let emailRegexp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/

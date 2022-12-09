@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const emailValidator = require("email-validator")
 require('dotenv').config();
 
+// Fonction de création d'un utilisateur (vérification du format de l'eamil, et du MDP, puis création du condensat, avant création de l'user)
 exports.signup = (req, res, next) => {
   const isValidateEmail = emailValidator.validate(req.body.email);
   if (!isValidateEmail) {
@@ -28,7 +29,9 @@ exports.signup = (req, res, next) => {
          res.status(500).json({ error }));
       }
   };
-  
+
+
+  //Fonction de login d'un utilisateur enregistré. (vérification des entrées puis création du Token de session)
   exports.login = (req, res, next) => {
         User.findOne({email: req.body.email })
       .then(user => {

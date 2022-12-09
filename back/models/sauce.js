@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// Fonction du schéma de données associé à une sauce et sa création)
+
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
